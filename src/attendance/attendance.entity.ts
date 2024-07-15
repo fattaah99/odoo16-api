@@ -25,4 +25,32 @@ export class Attendance {
 
   @Column({ type: 'timestamp' })
   write_date: Date;
+
+  @Column({ type: 'double precision', nullable: true })
+  worked_hours: number;
+
+  // New columns based on the image
+  @Column({ type: 'character varying', nullable: true })
+  checkin_address: string;
+
+  @Column({ type: 'character varying', nullable: true })
+  checkout_address: string;
+
+  @Column({ type: 'character varying', nullable: true })
+  checkin_latitude: string;
+
+  @Column({ type: 'character varying', nullable: true })
+  checkout_latitude: string;
+
+  @Column({ type: 'character varying', nullable: true })
+  checkin_longitude: string;
+
+  @Column({ type: 'character varying', nullable: true })
+  checkout_longitude: string;
+
+  @Column({ type: 'character varying', nullable: true })
+  checkin_location: string;
+
+  @Column({ type: 'character varying', nullable: true })
+  checkout_location: string;
 }
