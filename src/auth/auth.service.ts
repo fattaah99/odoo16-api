@@ -105,9 +105,7 @@ export class AuthService {
     throw new UnauthorizedException('Invalid credentials');
   }
 
-  async login(
-    loginDto: LoginDto,
-  ): Promise<{
+  async login(loginDto: LoginDto): Promise<{
     token: string;
     user: Partial<User>;
     employee: Partial<Employee> | null;
