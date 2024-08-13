@@ -7,6 +7,10 @@ import { typeOrmConfig } from './ormconfig';
 // import { AuthModule } from './auth/auth.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+// import { UsersModule } from './users/users.module';
+
+import { HrLeaveModule } from './hr-leave/hr-leave.module';
+import { HrLeaveTypeModule } from './hr-leave-type/hr-leave-type.module';
 
 @Module({
   imports: [
@@ -17,6 +21,10 @@ import { ConfigModule } from '@nestjs/config';
     AttendanceModule,
     EmployeeModule,
     AuthModule,
+    // UsersModule,
+
+    HrLeaveModule,
+    HrLeaveTypeModule,
     // AuthModule,
   ],
 })

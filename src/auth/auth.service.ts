@@ -119,6 +119,7 @@ export class AuthService {
       id: user.id,
       employee_id: employee ? employee.id : null,
       employee_name: employee ? employee.name : null,
+      department_id: employee ? employee.department_id : null,
     };
 
     const token = this.jwtService.sign(payload, {
