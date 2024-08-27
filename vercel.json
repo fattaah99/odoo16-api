@@ -11,10 +11,5 @@
       "src": "/(.*)",
       "dest": "src/main.ts"
     }
-  ],
-  "env": {
-    "SECRET_KEY": "@secret_key",
-    "API_KEY": "@api_key",
-    "DATABASE_URL": "@database_url"
-  }
+  ]
 }
