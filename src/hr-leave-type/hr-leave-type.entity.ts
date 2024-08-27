@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { HrLeave } from '../hr-leave/hr-leave.entity';
 
 @Entity('hr_leave_type')
 export class HrLeaveType {
@@ -76,4 +77,7 @@ export class HrLeaveType {
 
   @Column({ type: 'varchar', length: 255 })
   request_unit: string;
+
+  @OneToMany(() => HrLeave, (hrLeave) => hrLeave.holidayStatus)
+  hrLeaves: HrLeave[];
 }

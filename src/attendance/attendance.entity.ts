@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
+import { Employee } from '../employee/employee.entity';
 
 @Entity('hr_attendance')
 export class Attendance {
@@ -53,4 +60,8 @@ export class Attendance {
 
   @Column({ type: 'character varying', nullable: true })
   checkout_location: string;
+
+  @ManyToOne(() => Employee)
+  @JoinColumn({ name: 'employee_id' }) // Menghubungkan dengan kolom employee_id
+  employee: Employee;
 }

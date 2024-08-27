@@ -7,9 +7,11 @@ import { Employee } from '../employee/employee.entity';
 
 import { JwtService } from '@nestjs/jwt';
 import { JwtMiddleware } from '../auth/jwt.middleware';
+import { AuthModule } from '../auth/auth.module';
+import { User } from '../auth/res_users.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([HrLeave, Employee])], // Register the HrLeave entity here
+  imports: [TypeOrmModule.forFeature([HrLeave, Employee, User]), AuthModule], // Register the HrLeave entity here
   providers: [HrLeaveService, JwtService],
   controllers: [HrLeaveController],
 })

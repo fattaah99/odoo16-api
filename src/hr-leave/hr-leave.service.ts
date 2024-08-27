@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { HrLeave } from './hr-leave.entity';
@@ -60,12 +64,38 @@ export class HrLeaveService {
     return savedHrLeave;
   }
 
+  async findByEmployee(employee_id: number): Promise<HrLeave[]> {
+    // Find the employee using the actual employee_id from the request
+    const employee = await this.employeeRepository.findOne({
+      where: { id: employee_id },
+    });
+
+    // Handle case where employee is not found
+    if (!employee) {
+      throw new NotFoundException(`Employee with ID ${employee_id} not found`);
+    }
+
+    // Find HrLeave entries for the given employee_id
+    const hrLeaves = await this.hrLeaveRepository.find({
+      where: { employee_id: employee_id }, // Filter berdasarkan employee_id
+      relations: ['holidayStatus'], // Use the actual employee_id
+    });
+
+    return hrLeaves;
+  }
+
   async findAll(): Promise<HrLeave[]> {
     return this.hrLeaveRepository.find();
   }
 
   async findOne(id: number): Promise<HrLeave> {
-    return this.hrLeaveRepository.findOne({ where: { id } });
+    const hrLeave = await this.hrLeaveRepository.findOne({ where: { id } });
+
+    if (!hrLeave) {
+      throw new NotFoundException(`HrLeave with ID ${id} not found`);
+    }
+
+    return hrLeave;
   }
 
   async update(

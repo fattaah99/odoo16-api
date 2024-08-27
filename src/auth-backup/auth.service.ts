@@ -86,6 +86,8 @@ export class AuthService {
     const payload = {
       id: user.id,
       employee_id: employee ? employee.id : null,
+      employee_name: employee ? employee.name : null,
+      department_id: employee ? employee.department_id : null,
     };
 
     const token = this.jwtService.sign(payload, {
@@ -106,19 +108,8 @@ export class AuthService {
 
     return {
       token,
-      user: { id: user.id },
+      user: userWithoutSensitiveInfo,
       employee: employeeWithoutSensitiveInfo,
     };
-  }
-
-  async logout(user_id: number): Promise<void> {
-    const user = await this.userRepository.findOne({ where: { id: user_id } });
-
-    if (!user) {
-      throw new Error('User not found');
-    }
-
-    user.jwt_token_expiration = new Date();
-    await this.userRepository.save(user);
   }
 }

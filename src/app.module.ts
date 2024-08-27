@@ -8,6 +8,8 @@ import { typeOrmConfig } from './ormconfig';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 // import { UsersModule } from './users/users.module';
+import { APP_GUARD } from '@nestjs/core';
+import { ApiKeyGuard } from './auth/api-key.guard';
 
 import { HrLeaveModule } from './hr-leave/hr-leave.module';
 import { HrLeaveTypeModule } from './hr-leave-type/hr-leave-type.module';
@@ -26,6 +28,12 @@ import { HrLeaveTypeModule } from './hr-leave-type/hr-leave-type.module';
     HrLeaveModule,
     HrLeaveTypeModule,
     // AuthModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ApiKeyGuard, // Menggunakan ApiKeyGuard sebagai guard global
+    },
   ],
 })
 export class AppModule {

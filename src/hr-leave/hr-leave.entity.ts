@@ -4,7 +4,11 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { HrLeaveType } from '../hr-leave-type/hr-leave-type.entity';
+import { Employee } from '../employee/employee.entity';
 
 @Entity('hr_leave')
 export class HrLeave {
@@ -121,4 +125,12 @@ export class HrLeave {
 
   @Column({ type: 'text', nullable: true })
   notes: string;
+
+  @ManyToOne(() => HrLeaveType, (hrLeaveType) => hrLeaveType.hrLeaves)
+  @JoinColumn({ name: 'holiday_status_id' })
+  holidayStatus: HrLeaveType;
+
+  @ManyToOne(() => Employee)
+  @JoinColumn({ name: 'employee_id' }) // Menghubungkan dengan kolom employee_id
+  employee: Employee;
 }

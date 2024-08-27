@@ -6,8 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
+  HttpStatus,
+  HttpCode,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { HrLeaveTypeService } from './hr-leave-type.service';
+
 import {
   CreateHrLeaveTypeDto,
   UpdateHrLeaveTypeDto,
@@ -21,7 +26,8 @@ export class HrLeaveTypeController {
   create(@Body() createHrLeaveTypeDto: CreateHrLeaveTypeDto) {
     return this.hrLeaveTypeService.create(createHrLeaveTypeDto);
   }
-
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
   @Get()
   findAll() {
     return this.hrLeaveTypeService.findAll();

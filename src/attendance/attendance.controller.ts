@@ -53,6 +53,7 @@ import {
   HttpCode,
   HttpStatus,
   Req,
+  Get,
 } from '@nestjs/common';
 import { AttendanceService } from './attendance.service';
 import { CheckInDto } from './dto/check-in.dto';
@@ -95,5 +96,35 @@ export class AttendanceController {
   async checkOut(@Req() req: Request, @Body() checkOutDto: CheckOutDto) {
     const employee_id = req['user'].employee_id; // Get employee ID from token
     return this.attendanceService.checkOut(employee_id, checkOutDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Get('by-employee')
+  async getAttendaceByToken(@Req() req: Request) {
+    const employee_id = req['user'].employee_id;
+    return this.attendanceService.findByEmployee(employee_id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Get('by-employee-date')
+  async getAttendaceByEmployeeDate(@Req() req: Request) {
+    const employee_id = req['user'].employee_id;
+    return this.attendanceService.findByEmployeeDate(employee_id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Get()
+  async getAllAttendace() {
+    return this.attendanceService.findAll();
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.OK)
+  @Get(':id')
+  async getAttenddaceById(@Param('id') id: number) {
+    return this.attendanceService.findOne(id);
   }
 }
