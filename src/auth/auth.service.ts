@@ -58,14 +58,14 @@ export class AuthService {
 
   async validateUser(login: string, password_hp: string): Promise<User> {
     const secretKey = process.env.SECRET_KEY;
-    console.log('Login:', login); // Logging login
+    // console.log('Login:', login); // Logging login
     const user = await this.userRepository.findOne({ where: { login } });
     if (user) {
       const hash = crypto
         .createHmac('sha256', secretKey)
         .update(password_hp)
         .digest('hex');
-      console.log('Hash:', hash); // Logging hash
+      // console.log('Hash:', hash); // Logging hash
       if (await bcrypt.compare(hash, user.password_hp)) {
         return user;
       }

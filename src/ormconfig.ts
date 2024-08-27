@@ -28,6 +28,7 @@ import { Employee } from './employee/employee.entity';
 config();
 
 const databaseUrl = process.env.DATABASE_URL;
+const databaseType = process.env.DB_TYPE;
 
 if (!databaseUrl) {
   throw new Error('DATABASE_URL is not defined in the environment variables');
